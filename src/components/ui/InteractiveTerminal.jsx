@@ -56,9 +56,9 @@ const InteractiveTerminal = () => {
             marginTop: '60px', 
             border: '1px solid var(--term-ink)', 
             padding: '20px', 
-            maxWidth: '900px', 
+            maxWidth: '1000px', 
             margin: '60px auto 20px auto',
-            minHeight: '200px',
+            minHeight: '250px',
             backgroundColor: 'var(--term-dim)'
         }}>
             <div style={{ borderBottom: '1px dashed var(--term-ink)', marginBottom: '10px', paddingBottom: '5px' }}>

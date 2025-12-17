@@ -126,17 +126,19 @@ function App() {
                   Full Stack Developer enthusiastic about UI/UX and building high-performance web applications.
               </p>
               
-              <div style={{ margin: '20px 0', border: '1px solid var(--term-ink)', padding: '10px', backgroundColor: 'var(--term-dim)' }}>
-                  <pre style={{ fontSize: '10px', lineHeight: '10px', margin: 0 }}>
-{`    .--.       
-   |o_o |    [ SYSTEM: LINUX ]
-   |:_/ |    [ DISTRO: FEDORA ]
-  //   \\ \\   
- (|     | )  
-/'\\_   _/
-\\___)=(___/  `}
-                  </pre>
-              </div>
+<div style={{ margin: '20px 0', border: '1px solid var(--term-ink)', padding: '10px', backgroundColor: 'var(--term-dim)' }}>
+  <pre style={{ fontSize: '10px', lineHeight: '10px', margin: 0 }}>
+{`        .---.
+       /     \\
+       \\.@-@./       [ SYSTEM: LINUX ]
+       /\`\\_/\`\\       [ DISTRO: FEDORA ]
+      //  _  \\\\      
+     | \\     )|_    
+    /\`\\_\`>  <_/ \\
+    \\__/'---'\\__/`}
+  </pre>
+</div>
+
               <p>&gt; GOAL: Scalable Architecture && Clean Code.</p>
           </AsciiPanel>
 
@@ -180,7 +182,7 @@ function App() {
       <SectionDivider title="EDUCATION_LOG" theme={theme} />
       <div style={{ marginTop: '0px' }}>
           <AsciiPanel title="03_EDUCATION.log">
-              <pre style={{ fontSize: '12px', lineHeight: '1.5', whiteSpace: 'pre-wrap' }}>
+              <pre style={{ fontSize: '14px', lineHeight: '1.5', whiteSpace: 'pre-wrap' }}>
 {`./EDUCATION/
 ├── 2020-PRESENT: Systems Engineering
 │   ├── Universidad de Cartagena
