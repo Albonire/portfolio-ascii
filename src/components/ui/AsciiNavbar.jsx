@@ -16,13 +16,13 @@ const AsciiNavbar = ({ currentTheme, toggleTheme }) => {
             width: '100%',
             backgroundColor: 'var(--term-ink)',
             color: 'var(--term-bg)',
-            fontFamily: 'Fira Code, monospace',
-            padding: '5px 10px',
+            fontFamily: '"Press Start 2P", cursive',
+            padding: '10px 10px', /* Increased padding for larger font */
             zIndex: 9999,
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            fontSize: '12px',
+            fontSize: '10px', /* Smaller font size for this bulky font */
             borderBottom: '2px solid var(--term-bg)',
             boxShadow: '0 2px 10px rgba(0,0,0,0.5)'
         }}>

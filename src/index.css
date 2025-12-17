@@ -1,5 +1,6 @@
 /* Import Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 :root {
     /* Default Theme (Blueprint - Original) */
@@ -8,13 +9,12 @@
     --term-dim: rgba(0, 34, 170, 0.4);
     --term-glitch: #ff00ea;
 }
-
-[data-theme="matrix"] {
-    /* Matrix - High Contrast Phosphor */
-    --term-bg: #0A0A0A;      /* Pure Black */
-    --term-ink: #20C20E;     /* VT220 Green */
-    --term-dim: rgba(32, 194, 14, 0.15);
-    --term-glitch: #E5E5E5;  /* White Noise */
+/* Theme: Concrete (User Requested) */
+[data-theme='concrete'] {
+    --term-bg: hsl(0, 0%, 20%);
+    --term-ink: hsl(0, 3%, 61%);
+    --term-dim: hsl(0, 0%, 30%);
+    --term-glitch: hsl(0, 0%, 80%);
 }
 
 [data-theme="amber"] {
@@ -41,8 +41,8 @@ body {
     background-color: var(--term-bg);
     color: var(--term-ink);
     font-family: 'Fira Code', monospace;
-    font-size: 14px;
-    line-height: 1.4;
+    font-size: 16px; /* Increased from 14px */
+    line-height: 1.5; /* Slightly increased for readability */
     overflow-x: hidden;
     transition: background-color 0.3s, color 0.3s;
     min-height: 100vh;
@@ -100,25 +100,121 @@ a {
     animation: flicker 0.15s infinite;
 }
 
+/* Mouse Interference Effect */
+.crt::before {
+    /* Existing scanlines... reusing this pseudo-element or adding a new one? 
+       Actually, let's keep the existing scanlines in ::before and add interference to a new container or repurpose ::after?
+       The previous tool call showed ::before (scanlines) and ::after (vignette).
+       
+       Let's inject the gradient into the background of body or a specific overlay class.
+       However, the prompt allows modifying index.css.
+       
+       Let's add a specific interference overlay class that App.jsx can use, 
+       OR just add it to .crt itself if it tracks mouse.
+       
+       Since we're using mix-blend-mode for interference, a separate pseudo-element on .crt is best.
+       But .crt already uses ::before and ::after.
+       
+       Let's use a radial gradient on the body or the .crt container itself?
+       Actually, `background-image` on .crt might work if we blend it.
+    */
+}
+
+/* New Interference Layer */
+.crt {
+    /* Ensure variables have defaults */
+    --mouse-x: 50vw;
+    --mouse-y: 50vh;
+}
+
+.crt-interference {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9996; /* On top of content, below CRT flicker */
+    
+    /* Reveal only around mouse */
+    mask-image: radial-gradient(
+        circle 120px at var(--mouse-x, 50vw) var(--mouse-y, 50vh),
+        black 0%,
+        transparent 100%
+    );
+    -webkit-mask-image: radial-gradient(
+        circle 120px at var(--mouse-x, 50vw) var(--mouse-y, 50vh),
+        black 0%,
+        transparent 100%
+    );
+
+    /* The Interference / Distortion Effect (Monochrome Static) */
+    /* "Signal Loss" look: Strips color, boosts contrast/noise */
+    backdrop-filter: grayscale(100%) contrast(140%) brightness(120%) blur(0.5px);
+    -webkit-backdrop-filter: grayscale(100%) contrast(140%) brightness(120%) blur(0.5px);
+    
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0,
+        rgba(255, 255, 255, 0.15) 1px,
+        transparent 2px
+    );
+    mix-blend-mode: hard-light;
+}
+
 @keyframes flicker {
     0% { opacity: 0.95; }
     50% { opacity: 0.92; }
     100% { opacity: 0.96; }
 }
 
-/* Glitch Effect - Toned Down */
+/* Glitch Effect - Toned Down Further to fix "shake bug" */
 .glitch-hover:hover {
-    animation: glitch 0.2s cubic-bezier(.25, .46, .45, .94) both infinite;
+    animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
     color: var(--term-glitch);
 }
 
-@keyframes glitch {
-    0% { transform: translate(0) }
-    20% { transform: translate(-1px, 0) }
-    40% { transform: translate(1px, 0) }
-    60% { transform: translate(-0.5px, 0) }
-    80% { transform: translate(0.5px, 0) }
-    100% { transform: translate(0) }
+@keyframes glitch-anim {
+  0% { transform: translate(0); }
+  20% { transform: translate(-0.5px, 0.5px); } /* Reduced from 1px */
+  40% { transform: translate(-0.5px, -0.5px); }
+  60% { transform: translate(0.5px, 0.5px); }
+  80% { transform: translate(0.5px, -0.5px); }
+  100% { transform: translate(0); }
+}
+
+/* Retro Image Filter */
+.retro-img {
+  filter: grayscale(100%) contrast(1.2) brightness(0.9);
+  mix-blend-mode: luminosity; /* Blends with the background color mostly */
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  border: 1px solid var(--term-ink);
+  display: block;
+  max-width: 100%;
+}
+
+.retro-img:hover {
+  filter: grayscale(0%) contrast(1);
+  opacity: 1;
+  mix-blend-mode: normal;
+  border-color: var(--term-ink);
+}
+
+/* Header Flex Layout */
+.header-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+    .header-flex {
+        flex-direction: column;
+        gap: 20px;
+    }
 }
 
 .nav-item:hover {

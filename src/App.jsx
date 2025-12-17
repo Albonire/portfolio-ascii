@@ -1,35 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AsciiHero from './components/ascii/AsciiHero';
 import AsciiPanel from './components/ui/AsciiPanel';
 import InteractiveTerminal from './components/ui/InteractiveTerminal';
 import AsciiNavbar from './components/ui/AsciiNavbar';
 import SystemFooter from './components/ui/SystemFooter';
+import ProjectCard from './components/ui/ProjectCard';
+import ClickSpark from './components/ui/ClickSpark';
+import SectionDivider from './components/ui/SectionDivider';
 
 function App() {
   const [theme, setTheme] = useState('blueprint');
+  const containerRef = useRef(null);
 
   useEffect(() => {
     document.body.setAttribute('data-theme', theme);
   }, [theme]);
 
+  const handleMouseMove = (e) => {
+    if (containerRef.current) {
+        const x = e.clientX;
+        const y = e.clientY;
+        containerRef.current.style.setProperty('--mouse-x', `${x}px`);
+        containerRef.current.style.setProperty('--mouse-y', `${y}px`);
+    }
+  };
+
   const navigateTheme = () => {
-      const themes = ['blueprint', 'matrix', 'amber', 'cyber'];
+      const themes = ['blueprint', 'concrete', 'amber', 'cyber'];
       const nextIndex = (themes.indexOf(theme) + 1) % themes.length;
       setTheme(themes[nextIndex]);
   };
   
-  // ASCII Title "HELLO"
-  const titleAscii = `
-   _   _  _____  _      _      _____ 
-  | | | ||  ___|| |    | |    |  _  |
-  | |_| || |__  | |    | |    | | | |
-  |  _  ||  __| | |    | |    | | | |
-  | | | || |___ | |____| |____| |_| |
-  |_| |_||_____||______|______||_____|
- `.trim();
 
   return (
-    <div className="crt" style={{ maxWidth: '900px', margin: '0 auto', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div 
+        ref={containerRef}
+        className="crt" 
+        onMouseMove={handleMouseMove}
+        style={{ 
+            maxWidth: '1024px', 
+            margin: '0 auto', 
+            minHeight: '100vh', 
+            display: 'flex', 
+            flexDirection: 'column',
+            position: 'relative' // Needed for relative interference
+        }}
+    >
+      <div className="crt-interference" />
+      <ClickSpark />
       
       {/* Navbar now includes Theme Switcher logic if we pass it down, 
           OR we treat Navbar as a layout container. 
@@ -39,22 +57,50 @@ function App() {
       {/* HEADER SECTION */}
       <header id="main" style={{ textAlign: 'center', marginBottom: '40px', paddingTop: '80px' }}>
         
-        {/* 3D ASCII Object */}
-        <div style={{ marginBottom: '20px' }}>
-            <AsciiHero />
+        {/* Flex Container for ASCII + Profile */}
+        <div className="header-flex" style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            gap: '30px', 
+            marginBottom: '20px',
+            flexWrap: 'wrap' 
+        }}>
+            {/* 3D ASCII Object */}
+            <div>
+                <AsciiHero />
+            </div>
+
+            {/* Profile Picture */}
+            <div style={{ 
+                width: '180px', 
+                height: '180px', 
+                border: '2px dashed var(--term-ink)',
+                padding: '5px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                <img 
+                    src="https://github.com/Albonire.png" 
+                    alt="Profile" 
+                    className="retro-img"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+            </div>
         </div>
 
-        {/* ASCII Title */}
-        <pre style={{ 
-            fontSize: '10px', 
-            lineHeight: '10px', 
-            fontWeight: 'bold',
-            display: 'inline-block',
-            textAlign: 'left',
-            marginBottom: '20px'
+        {/* Pixel Art Title */}
+        <h1 style={{ 
+            fontFamily: '"Press Start 2P", cursive',
+            fontSize: 'clamp(3rem, 5vw, 6rem)', /* Responsive size */
+            lineHeight: '1',
+            margin: '20px 0',
+            color: 'var(--term-ink)',
+            textShadow: '4px 4px 0px var(--term-dim)'
         }}>
-            {titleAscii}
-        </pre>
+            HELLO
+        </h1>
 
         <div style={{ marginTop: '10px', borderTop: '1px dashed var(--term-ink)', borderBottom: '1px dashed var(--term-ink)', padding: '10px 0' }}>
             <p style={{ margin: 0, textTransform: 'uppercase', letterSpacing: '2px' }}>
@@ -67,6 +113,7 @@ function App() {
       </header>
 
       {/* GRID LAYOUT */}
+      <SectionDivider title="PROFILE_DATA" theme={theme} />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '40px' }} id="profile">
           
           {/* PROFILE */}
@@ -130,13 +177,22 @@ function App() {
       </div>
 
       {/* EDUCATION SECTION */}
-      <div style={{ marginTop: '40px' }}>
+      <SectionDivider title="EDUCATION_LOG" theme={theme} />
+      <div style={{ marginTop: '0px' }}>
           <AsciiPanel title="03_EDUCATION.log">
               <pre style={{ fontSize: '12px', lineHeight: '1.5', whiteSpace: 'pre-wrap' }}>
 {`./EDUCATION/
 ├── 2020-PRESENT: Systems Engineering
 │   ├── Universidad de Cartagena
 │   └── Notes: Software Dev, Algorithms
+│
+├── 2024: Programming Bootcamp
+│   ├── Sergio Arboleda University
+│   └── Notes: TS, React, Node.js, Next.js
+│
+├── 2024: AI & Big Data Certification
+│   ├── Ministry of ICT + BogoData
+│   └── Notes: Python, Data Analysis
 │
 ├── 2023: English B2
 │   └── Centro Colombo Americano
@@ -151,79 +207,80 @@ function App() {
       </div>
 
       {/* PROJECTS */}
-      <div style={{ marginTop: '40px' }} id="projects">
+      <SectionDivider title="PROJECT_FILES" theme={theme} />
+      <div style={{ marginTop: '0px' }} id="projects">
         <AsciiPanel title="04_PROJECTS.dir">
             
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
                 
-                {/* Project 1 */}
-                <div style={{ border: '1px dotted var(--term-ink)', padding: '15px' }} className="glitch-hover">
-                    <h3 style={{ borderBottom: '2px solid var(--term-ink)', display: 'inline-block' }}>Task Manager</h3>
-                    <div style={{ margin: '10px 0', fontSize: '11px', fontWeight: 'bold' }}>
-                        [WEB] &lt;=======&gt; [POMODORO]
-                    </div>
-                    <p>Task management platform with Pomodoro integration and auth.</p>
-                    <p style={{ fontSize: '0.8em', textTransform: 'uppercase', marginTop: '5px' }}>
-                        Stack: Django | JS | SQLite3
-                    </p>
-                    <div style={{ marginTop: '10px', fontSize: '10px' }}>
-                        <a href="https://github.com/Albonire/To-DoList1.0" target="_blank" style={{ marginRight: '10px' }}>[ SOURCE ]</a>
-                    </div>
-                </div>
+                <ProjectCard 
+                    title="Task Manager"
+                    type="[WEB] <=======> [POMODORO]"
+                    desc="Task management platform with Pomodoro integration and auth."
+                    stack="Django | JS | SQLite3"
+                    image="/thumbnails/home_screencast_thumb.jpg"
+                    video="/videos/home_screencast.mp4"
+                    link="https://github.com/Albonire/To-DoList1.0"
+                />
 
-                {/* Project 2 */}
-                <div style={{ border: '1px dotted var(--term-ink)', padding: '15px' }} className="glitch-hover">
-                    <h3 style={{ borderBottom: '2px solid var(--term-ink)', display: 'inline-block' }}>BDI-GB-ZOO</h3>
-                    <div style={{ margin: '10px 0', fontSize: '11px', fontWeight: 'bold' }}>
-                        [ API ] &lt;~~&gt; [ ZOO MGMT ]
-                    </div>
-                    <p>Zoo management system for animals, habitats, and caretakers.</p>
-                    <p style={{ fontSize: '0.8em', textTransform: 'uppercase', marginTop: '5px' }}>
-                        Stack: FastAPI | Postgres | Docker
-                    </p>
-                    <div style={{ marginTop: '10px', fontSize: '10px' }}>
-                         <a href="https://github.com/Albonire/BDI-GB-ZOO" target="_blank" style={{ marginRight: '10px' }}>[ SOURCE ]</a>
-                         <a href="https://bdi-gb-zoo.vercel.app/" target="_blank">[ DEMO ]</a>
-                    </div>
-                </div>
+                <ProjectCard
+                    title="BDI-GB-ZOO"
+                    type="[ API ] <~~> [ ZOO MGMT ]"
+                    desc="Zoo management system for animals, habitats, and caretakers."
+                    stack="FastAPI | Postgres | Docker"
+                    image="/thumbnails/bdi_screencast_thumb.jpg"
+                    video="/videos/bdi_screencast.mp4"
+                    link="https://github.com/Albonire/BDI-GB-ZOO"
+                    demo="https://bdi-gb-zoo.vercel.app/"
+                />
 
-                 {/* Project 3 */}
-                 <div style={{ border: '1px dotted var(--term-ink)', padding: '15px' }} className="glitch-hover">
-                    <h3 style={{ borderBottom: '2px solid var(--term-ink)', display: 'inline-block' }}>IA Humanizer</h3>
-                    <div style={{ margin: '10px 0', fontSize: '11px', fontWeight: 'bold' }}>
-                        [ AI ] &lt;---&gt; [ TEXT ]
-                    </div>
-                    <p>AI text humanizer and rewriting orchestrator.</p>
-                    <p style={{ fontSize: '0.8em', textTransform: 'uppercase', marginTop: '5px' }}>
-                        Stack: React | TS | OpenAI
-                    </p>
-                    <div style={{ marginTop: '10px', fontSize: '10px' }}>
-                        <a href="https://github.com/Albonire/ia-humanizer" target="_blank" style={{ marginRight: '10px' }}>[ SOURCE ]</a>
-                        <a href="https://ia-humanizer-neon.vercel.app/" target="_blank">[ DEMO ]</a>
-                    </div>
-                </div>
+                <ProjectCard
+                    title="IA Humanizer"
+                    type="[ AI ] <---> [ TEXT ]"
+                    desc="AI text humanizer and rewriting orchestrator."
+                    stack="React | TS | OpenAI"
+                    image="/thumbnails/humanizer_screencast_thumb.jpg"
+                    video="/videos/humanizer_screencast.mp4"
+                    link="https://github.com/Albonire/ia-humanizer"
+                    demo="https://ia-humanizer-neon.vercel.app/"
+                />
 
-                {/* Project 4 */}
-                <div style={{ border: '1px dotted var(--term-ink)', padding: '15px' }} className="glitch-hover">
-                    <h3 style={{ borderBottom: '2px solid var(--term-ink)', display: 'inline-block' }}>Cupido App</h3>
-                    <div style={{ margin: '10px 0', fontSize: '11px', fontWeight: 'bold' }}>
-                        [ SOCIAL ] &lt;===&gt; [ DATING ]
-                    </div>
-                    <p>Full-stack dating application for university students.</p>
-                    <p style={{ fontSize: '0.8em', textTransform: 'uppercase', marginTop: '5px' }}>
-                        Stack: React | Django | DRF
-                    </p>
-                    <div style={{ marginTop: '10px', fontSize: '10px' }}>
-                        <a href="https://github.com/cupidoUP-App" target="_blank" style={{ marginRight: '10px' }}>[ SOURCE ]</a>
-                        <a href="https://cupido-sandy.vercel.app/" target="_blank">[ DEMO ]</a>
-                    </div>
-                </div>
+                <ProjectCard
+                    title="Cupido App"
+                    type="[ SOCIAL ] <===> [ DATING ]"
+                    desc="Full-stack dating application for university students."
+                    stack="React | Django | DRF"
+                    image="/thumbnails/cupido_screencast_thumb.jpg"
+                    video="/videos/cupido_screencast.mp4"
+                    link="https://github.com/cupidoUP-App"
+                    demo="https://cupido-sandy.vercel.app/"
+                />
+
+                <ProjectCard
+                    title="Home Button"
+                    type="[ GNOME ] <===> [ LINUX ]"
+                    desc="GNOME Shell extension to minimize windows and show desktop."
+                    stack="JavaScript | GJS"
+                    image="/thumbnails/homebutton_screencast_thumb.jpg"
+                    video="/videos/homebutton_screencast.mp4"
+                    link="https://github.com/Albonire/home-button"
+                />
+
+                <ProjectCard
+                    title="Quantum Leap"
+                    type="[ WEB ] <===> [ PORTFOLIO ]"
+                    desc="High-performance web portfolio showing skills and experience."
+                    stack="React | Tailwind | Shadcn"
+                    image="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&h=400&fit=crop"
+                    link="https://github.com/Albonire/quantum-leap-canvas"
+                />
 
             </div>
         </AsciiPanel>
       </div>
       
       {/* TERMINAL */}
+      <SectionDivider title="SYSTEM_END" theme={theme} />
       <InteractiveTerminal />
 
       {/* FOOTER */}
