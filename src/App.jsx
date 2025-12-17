@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import AsciiHero from './components/ascii/AsciiHero';
 import AsciiPanel from './components/ui/AsciiPanel';
-import AsciiButton from './components/ui/AsciiButton';
 import InteractiveTerminal from './components/ui/InteractiveTerminal';
-import ThemeSwitcher from './components/ui/ThemeSwitcher';
+import AsciiNavbar from './components/ui/AsciiNavbar';
+import SystemFooter from './components/ui/SystemFooter';
 
 function App() {
   const [theme, setTheme] = useState('blueprint');
@@ -18,23 +18,26 @@ function App() {
       setTheme(themes[nextIndex]);
   };
   
-  // ASCII Title "Graphic"
+  // ASCII Title "HELLO"
   const titleAscii = `
-  _   _  ____  _      _    
- | | | |/ __ \\| |    | |   
- | |_| | |  | | |    | |   
- |  _  | |  | | |    | |   
- | | | | |__| | |____| |____ 
- |_| |_|\\____/|______|______|
+   _   _  _____  _      _      _____ 
+  | | | ||  ___|| |    | |    |  _  |
+  | |_| || |__  | |    | |    | | | |
+  |  _  ||  __| | |    | |    | | | |
+  | | | || |___ | |____| |____| |_| |
+  |_| |_||_____||______|______||_____|
  `.trim();
 
   return (
     <div className="crt" style={{ maxWidth: '900px', margin: '0 auto', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
-      <ThemeSwitcher currentTheme={theme} navigateTheme={navigateTheme} />
+      {/* Navbar now includes Theme Switcher logic if we pass it down, 
+          OR we treat Navbar as a layout container. 
+          Let's pass the theme controls to Navbar for integration. */}
+      <AsciiNavbar currentTheme={theme} toggleTheme={navigateTheme} />
 
       {/* HEADER SECTION */}
-      <header style={{ textAlign: 'center', marginBottom: '40px', paddingTop: '40px' }}>
+      <header id="main" style={{ textAlign: 'center', marginBottom: '40px', paddingTop: '80px' }}>
         
         {/* 3D ASCII Object */}
         <div style={{ marginBottom: '20px' }}>
@@ -55,16 +58,16 @@ function App() {
 
         <div style={{ marginTop: '10px', borderTop: '1px dashed var(--term-ink)', borderBottom: '1px dashed var(--term-ink)', padding: '10px 0' }}>
             <p style={{ margin: 0, textTransform: 'uppercase', letterSpacing: '2px' }}>
-                &lt; SYSTEM.USER: [TU NOMBRE] /&gt;
+                &lt; SYSTEM.USER: FABIAN GONZÁLEZ /&gt;
             </p>
             <p style={{ margin: 0, fontSize: '0.9em', opacity: 0.8 }}>
-                [ STATUS: ONLINE ] [ ROLE: SOFTWARE_ENGINEER ]
+                [ STATUS: ONLINE ] [ ROLE: SOFTWARE_ENGINEER / FULLSTACK DEV ]
             </p>
         </div>
       </header>
 
       {/* GRID LAYOUT */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '40px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '40px' }} id="profile">
           
           {/* PROFILE */}
           <AsciiPanel title="01_PROFILE.exe">
@@ -104,7 +107,7 @@ function App() {
                           fontWeight: 'bold',
                           transition: 'color 0.2s'
                       }}
-                      onMouseEnter={(e) => { e.target.textContent = `> ${tech.replace(/[\[\]]/g, '')} <`; }}
+                      onMouseEnter={(e) => { e.target.textContent = `> ${tech.replace(/[[]]/g, '')} <`; }}
                       onMouseLeave={(e) => { e.target.textContent = tech; }}
                       >
                           {tech}
@@ -122,9 +125,27 @@ function App() {
           </AsciiPanel>
       </div>
 
-      {/* PROJECTS */}
+      {/* EDUCATION SECTION */}
       <div style={{ marginTop: '40px' }}>
-        <AsciiPanel title="03_PROJECTS.dir">
+          <AsciiPanel title="03_EDUCATION.log">
+              <pre style={{ fontSize: '12px', lineHeight: '1.5', whiteSpace: 'pre-wrap' }}>
+{`./EDUCATION/
+├── 2024: Software Engineering
+│   ├── University [Name]
+│   └── Status: [In Progress / Graduated]
+│
+└── 20XX: [Previous Title / High School]
+    └── [Institution]`}
+              </pre>
+              <p style={{ marginTop: '10px', fontStyle: 'italic', opacity: 0.8 }}>
+                  &gt; "Learning is a continuous process."
+              </p>
+          </AsciiPanel>
+      </div>
+
+      {/* PROJECTS */}
+      <div style={{ marginTop: '40px' }} id="projects">
+        <AsciiPanel title="04_PROJECTS.dir">
             
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
                 
@@ -156,18 +177,7 @@ function App() {
       <InteractiveTerminal />
 
       {/* FOOTER */}
-      <div style={{ textAlign: 'center', margin: '40px 0', borderTop: '4px double var(--term-ink)', paddingTop: '40px' }}>
-          <p style={{ fontSize: '1.2rem', textTransform: 'uppercase' }}>&gt; INITIATE_CONTACT?</p>
-          
-          <AsciiButton href="mailto:tuemail@ejemplo.com" className="glitch-hover">
-              SEND_EMAIL
-          </AsciiButton>
-
-          <br /><br />
-          <div style={{ opacity: 0.6, fontSize: '0.8rem' }}>
-              &gt; git commit -m "End of transmission"
-          </div>
-      </div>
+      <SystemFooter />
 
     </div>
   );

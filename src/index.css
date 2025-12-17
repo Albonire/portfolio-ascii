@@ -120,3 +120,8 @@ a {
     80% { transform: translate(0.5px, 0) }
     100% { transform: translate(0) }
 }
+
+.nav-item:hover {
+    background-color: var(--term-bg);
+    color: var(--term-ink);
+}
