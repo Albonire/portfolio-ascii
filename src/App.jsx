@@ -1,143 +1,171 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import AsciiHero from './components/ascii/AsciiHero';
+import AsciiPanel from './components/ui/AsciiPanel';
+import AsciiButton from './components/ui/AsciiButton';
+import InteractiveTerminal from './components/ui/InteractiveTerminal';
+import ThemeSwitcher from './components/ui/ThemeSwitcher';
 
 function App() {
-  
-  // Click splash effect
+  const [theme, setTheme] = useState('blueprint');
+
   useEffect(() => {
-    const handleClick = (e) => {
-      const splash = document.createElement('div');
-      splash.style.position = 'absolute';
-      splash.style.width = '20px';
-      splash.style.height = '20px';
-      splash.style.background = 'radial-gradient(circle, var(--ink-color) 0%, transparent 80%)';
-      splash.style.borderRadius = '50%';
-      splash.style.pointerEvents = 'none';
-      splash.style.transform = 'translate(-50%, -50%) scale(0)';
-      splash.style.opacity = '0.8';
-      splash.style.zIndex = '9999';
-      splash.style.left = e.pageX + 'px';
-      splash.style.top = e.pageY + 'px';
-      splash.style.transition = 'transform 0.6s ease-out, opacity 0.6s ease-out';
-      
-      document.body.appendChild(splash);
+    document.body.setAttribute('data-theme', theme);
+  }, [theme]);
 
-      requestAnimationFrame(() => {
-        splash.style.transform = 'translate(-50%, -50%) scale(4)';
-        splash.style.opacity = '0';
-      });
-
-      setTimeout(() => {
-        splash.remove();
-      }, 600);
-    };
-
-    document.addEventListener('click', handleClick);
-    return () => document.removeEventListener('click', handleClick);
-  }, []);
+  const navigateTheme = () => {
+      const themes = ['blueprint', 'matrix', 'amber', 'cyber'];
+      const nextIndex = (themes.indexOf(theme) + 1) % themes.length;
+      setTheme(themes[nextIndex]);
+  };
+  
+  // ASCII Title "Graphic"
+  const titleAscii = `
+  _   _  ____  _      _    
+ | | | |/ __ \\| |    | |   
+ | |_| | |  | | |    | |   
+ |  _  | |  | | |    | |   
+ | | | | |__| | |____| |____ 
+ |_| |_|\\____/|______|______|
+ `.trim();
 
   return (
-    <div className="notebook-container">
+    <div className="crt" style={{ maxWidth: '900px', margin: '0 auto', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
-      {/* HEADER */}
-      <header style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <div className="hand-drawn-box" style={{ display: 'inline-block', padding: '10px 20px', width: '100%', maxWidth: '500px' }}>
+      <ThemeSwitcher currentTheme={theme} navigateTheme={navigateTheme} />
+
+      {/* HEADER SECTION */}
+      <header style={{ textAlign: 'center', marginBottom: '40px', paddingTop: '40px' }}>
+        
+        {/* 3D ASCII Object */}
+        <div style={{ marginBottom: '20px' }}>
             <AsciiHero />
         </div>
-        
-        <div style={{ marginTop: '20px' }}>
-            <h1>HOLA, SOY [TU NOMBRE]</h1>
-            <p style={{ opacity: 0.9 }}>
-                <span className="tech-font">&lt;Ingeniero de Software /&gt;</span>
-                <br />
-                Dibujando código limpio desde Colombia.
+
+        {/* ASCII Title */}
+        <pre style={{ 
+            fontSize: '10px', 
+            lineHeight: '10px', 
+            fontWeight: 'bold',
+            display: 'inline-block',
+            textAlign: 'left',
+            marginBottom: '20px'
+        }}>
+            {titleAscii}
+        </pre>
+
+        <div style={{ marginTop: '10px', borderTop: '1px dashed var(--term-ink)', borderBottom: '1px dashed var(--term-ink)', padding: '10px 0' }}>
+            <p style={{ margin: 0, textTransform: 'uppercase', letterSpacing: '2px' }}>
+                &lt; SYSTEM.USER: [TU NOMBRE] /&gt;
+            </p>
+            <p style={{ margin: 0, fontSize: '0.9em', opacity: 0.8 }}>
+                [ STATUS: ONLINE ] [ ROLE: SOFTWARE_ENGINEER ]
             </p>
         </div>
       </header>
 
       {/* GRID LAYOUT */}
-      <div className="grid-2">
-          {/* PERFIL */}
-          <div className="hand-drawn-box">
-              <h2>01. Sobre Mí</h2>
-              <p>
-                  Estudiante apasionado por el caos ordenado. Me muevo entre la terminal de 
-                  <strong> Fedora</strong> y el desarrollo Full Stack.
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '40px' }}>
+          
+          {/* PROFILE */}
+          <AsciiPanel title="01_PROFILE.exe">
+              <p style={{ textAlign: 'justify' }}>
+                  &gt; INIT_SEQUENCE... <br/>
+                  &gt; LOAD_DATA: PASSION <br/><br/>
+                  Full Stack Developer navigating the chaos of the web via <strong>Fedora Linux</strong>.
               </p>
-              <div style={{ textAlign: 'center', margin: '20px 0' }}>
-                  <pre style={{ fontSize: '10px', lineHeight: '10px', display: 'inline-block', textAlign: 'left' }}>
+              
+              <div style={{ margin: '20px 0', border: '1px solid var(--term-ink)', padding: '10px', backgroundColor: 'var(--term-dim)' }}>
+                  <pre style={{ fontSize: '10px', lineHeight: '10px', margin: 0 }}>
 {`    .--.       
-   |o_o |    [ LINUX ]
-   |:_/ |    [ INSIDE ]
+   |o_o |    [ SYSTEM: LINUX ]
+   |:_/ |    [ KERNEL: UP ]
   //   \\ \\   
  (|     | )  
 /'\\_   _/
 \\___)=(___/  `}
                   </pre>
               </div>
-              <p>Meta actual: Arquitecturas escalables y código "artesanal".</p>
-          </div>
+              <p>&gt; GOAL: Scalable Architecture && Clean Code.</p>
+          </AsciiPanel>
 
-          {/* STACK */}
-          <div className="hand-drawn-box">
-              <h2>02. Herramientas</h2>
-              <p>Mis pinceles digitales:</p>
+          {/* TOOLKIT */}
+          <AsciiPanel title="02_TOOLKIT.lib">
+              <p>&gt; LOADING_MODULES:</p>
               
-              <div className="sticker-container">
-                  {['Python 🐍', 'React.js ⚛️', 'Django 🎸', 'Linux 🐧', 'Azure ☁️', 'Git 🐙', 'PostgreSQL 🐘'].map(tech => (
-                      <span key={tech} className="sticker">
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+                  {[
+                      '[ PYTHON ]', '[ REACT ]', '[ DJANGO ]', 
+                      '[ LINUX ]', '[ AZURE ]', '[ GIT ]', '[ PSQL ]'
+                  ].map((tech) => (
+                      <span key={tech} 
+                      className="glitch-hover"
+                      style={{ 
+                          cursor: 'crosshair', 
+                          fontWeight: 'bold',
+                          transition: 'color 0.2s'
+                      }}
+                      onMouseEnter={(e) => { e.target.textContent = `> ${tech.replace(/[\[\]]/g, '')} <`; }}
+                      onMouseLeave={(e) => { e.target.textContent = tech; }}
+                      >
                           {tech}
                       </span>
                   ))}
               </div>
 
-              <br />
-              <div style={{ borderTop: '1px dashed var(--ink-color)', paddingTop: '10px' }}>
-                  <p style={{ fontSize: '0.9em' }}>Aprendiendo:</p>
-                  <div className="tech-font" style={{ fontSize: '0.8rem' }}>
-                      &gt; Machine Learning<br />
-                      &gt; WebSockets Avanzados
-                  </div>
+              <div style={{ marginTop: '30px' }}>
+                  <p style={{ borderBottom: '1px solid var(--term-ink)', display: 'inline-block' }}>&gt; PENDING_UPDATES:</p>
+                  <ul style={{ listStyle: 'none', paddingLeft: '0' }}>
+                      <li>[*] Machine Learning</li>
+                      <li>[*] Advanced WebSockets</li>
+                  </ul>
               </div>
-          </div>
+          </AsciiPanel>
       </div>
 
-      {/* PROYECTOS */}
-      <div className="hand-drawn-box">
-        <h2>03. Proyectos</h2>
-        
-        <div className="grid-2" style={{ marginTop: '20px' }}>
+      {/* PROJECTS */}
+      <div style={{ marginTop: '40px' }}>
+        <AsciiPanel title="03_PROJECTS.dir">
             
-            {/* Proyecto 1 */}
-            <div>
-                <h3>&gt; cupidoUP_App</h3>
-                <div className="tech-font" style={{ fontSize: '10px', border: '1px solid var(--ink-color)', padding: '5px', width: 'fit-content', marginBottom: '10px' }}>
-  [APP] &lt;--&gt; [DB]
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+                
+                {/* Project 1 */}
+                <div style={{ border: '1px dotted var(--term-ink)', padding: '15px' }} className="glitch-hover">
+                    <h3 style={{ borderBottom: '2px solid var(--term-ink)', display: 'inline-block' }}>cupidoUP_App</h3>
+                    <div style={{ margin: '10px 0', fontSize: '11px', fontWeight: 'bold' }}>
+                        [APP] &lt;=======&gt; [DATABASE]
+                    </div>
+                    <p>University social network for secure student connections.</p>
+                    <p style={{ fontSize: '0.8em', textTransform: 'uppercase' }}>Stack: Django | React</p>
                 </div>
-                <p>Red social universitaria para conectar estudiantes.</p>
-                <small className="tech-font">Stack: Django, React</small>
-            </div>
 
-            {/* Proyecto 2 */}
-            <div>
-                <h3>&gt; Azure Sockets</h3>
-                <div className="tech-font" style={{ fontSize: '10px', border: '1px solid var(--ink-color)', padding: '5px', width: 'fit-content', marginBottom: '10px' }}>
- (☁️) &lt;--&gt; (💬)
+                {/* Project 2 */}
+                <div style={{ border: '1px dotted var(--term-ink)', padding: '15px' }} className="glitch-hover">
+                    <h3 style={{ borderBottom: '2px solid var(--term-ink)', display: 'inline-block' }}>Azure_Sockets</h3>
+                    <div style={{ margin: '10px 0', fontSize: '11px', fontWeight: 'bold' }}>
+                        (CLOUD) &lt;~~&gt; (CLIENT)
+                    </div>
+                    <p>Real-time chat infrastructure deployed on Azure.</p>
+                    <p style={{ fontSize: '0.8em', textTransform: 'uppercase' }}>Stack: Python | Redis</p>
                 </div>
-                <p>Chat en tiempo real desplegado en la nube.</p>
-                <small className="tech-font">Stack: Python, Redis</small>
-            </div>
 
-        </div>
+            </div>
+        </AsciiPanel>
       </div>
+      
+      {/* TERMINAL */}
+      <InteractiveTerminal />
 
-      {/* CONTACTO */}
-      <div style={{ textAlign: 'center', marginBottom: '80px' }}>
-          <p style={{ fontSize: '1.3rem' }}>¿Creamos algo juntos?</p>
-          <a href="mailto:tuemail@ejemplo.com" className="btn-ink">Enviar Correo ✉️</a>
+      {/* FOOTER */}
+      <div style={{ textAlign: 'center', margin: '40px 0', borderTop: '4px double var(--term-ink)', paddingTop: '40px' }}>
+          <p style={{ fontSize: '1.2rem', textTransform: 'uppercase' }}>&gt; INITIATE_CONTACT?</p>
+          
+          <AsciiButton href="mailto:tuemail@ejemplo.com" className="glitch-hover">
+              SEND_EMAIL
+          </AsciiButton>
+
           <br /><br />
-          <div className="tech-font" style={{ fontSize: '0.8rem' }}>
-              git commit -m "Thanks for visiting"
+          <div style={{ opacity: 0.6, fontSize: '0.8rem' }}>
+              &gt; git commit -m "End of transmission"
           </div>
       </div>
 

@@ -1,161 +1,122 @@
 /* Import Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Patrick+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
 
 :root {
-    --ink-color: #0022aa;       /* Azul Bolígrafo Intenso */
-    --ink-light: #4466cc;       /* Azul más suave */
-    --paper-bg: #fdfbf7;        /* Blanco cálido tipo papel */
-    --grid-line: #e1e5ee;       /* Líneas de cuadrícula */
-    --shadow-ink: rgba(0, 34, 170, 0.1);
+    /* Default Theme (Blueprint - Original) */
+    --term-bg: #fdfbf7;
+    --term-ink: #0022aa;
+    --term-dim: rgba(0, 34, 170, 0.4);
+    --term-glitch: #ff00ea;
+}
+
+[data-theme="matrix"] {
+    /* Matrix - High Contrast Phosphor */
+    --term-bg: #0A0A0A;      /* Pure Black */
+    --term-ink: #20C20E;     /* VT220 Green */
+    --term-dim: rgba(32, 194, 14, 0.15);
+    --term-glitch: #E5E5E5;  /* White Noise */
+}
+
+[data-theme="amber"] {
+    /* Amber - Warm Retro */
+    --term-bg: #1B1812;      /* Dark Sepia */
+    --term-ink: #D19A66;     /* Mellow Amber/Gold */
+    --term-dim: rgba(209, 154, 102, 0.15);
+    --term-glitch: #E06C75;  /* Soft Red */
+}
+
+[data-theme="cyber"] {
+    /* Cyber - Dracula Inspired */
+    --term-bg: #282A36;      /* Dracula BG */
+    --term-ink: #BD93F9;     /* Dracula Purple */
+    --term-dim: rgba(189, 147, 249, 0.15);
+    --term-glitch: #FF79C6;  /* Dracula Pink */
 }
 
 * { box-sizing: border-box; }
 
 body {
     margin: 0;
-    padding: clamp(10px, 5vw, 40px); /* Padding dinámico */
-    background-color: var(--paper-bg);
-    /* Patrón de papel milimetrado */
-    background-image: 
-        linear-gradient(var(--grid-line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size: 20px 20px;
-    color: var(--ink-color);
-    font-family: 'Patrick Hand', cursive;
+    padding: 20px;
+    background-color: var(--term-bg);
+    color: var(--term-ink);
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 1.4;
     overflow-x: hidden;
-    /* Tamaño de fuente fluido: mín 16px, ideal 1.2vw, máx 20px */
-    font-size: clamp(16px, 1.2vw, 20px); 
-    line-height: 1.5;
-    cursor: text;
+    transition: background-color 0.3s, color 0.3s;
+    min-height: 100vh;
 }
 
-/* --- EFECTO MANCHA DE TINTA (CLICK) --- */
-/* (Nota: El JS maneja la creación, estas son las animaciones) */
-/* Se agregan dinámicamente en el JS, pero podemos tener estilos base si queremos */
-
-/* Contenedor Principal */
-.notebook-container {
-    max-width: 900px;
-    width: 100%;
-    margin: 0 auto;
-    position: relative;
+/* Force everything to inherit monospace */
+h1, h2, h3, p, a, button, span, div, input {
+    font-family: 'Fira Code', monospace !important;
+    letter-spacing: -0.5px;
 }
 
-/* --- ESTILO "DIBUJADO A MANO" --- */
-.hand-drawn-box {
-    border: 2px solid var(--ink-color);
-    padding: clamp(15px, 4vw, 25px); /* Padding responsive */
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-    box-shadow: 5px 5px 0 var(--shadow-ink);
-    transition: all 0.3s ease;
-    margin-bottom: 30px;
-    position: relative;
-    color: var(--ink-color);
-}
-
-.hand-drawn-box:hover {
-    transform: translate(-2px, -3px) rotate(-0.5deg);
-    box-shadow: 8px 8px 0 var(--ink-color); 
-    background: #fff;
-    z-index: 10; /* Traer al frente */
-}
-
-/* Títulos */
-h1 {
-    font-size: clamp(2rem, 6vw, 3.5rem); /* Título gigante responsive */
-    margin-bottom: 5px;
-    line-height: 1.1;
-    margin-top: 0;
-}
-
-h2 {
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    display: inline-block;
-    position: relative;
-    margin-top: 0;
-    margin-bottom: 1rem;
-}
-
-/* Garabato debajo de los H2 */
-h2::after {
-    content: "";
-    position: absolute;
-    left: 0; bottom: -5px;
-    width: 100%;
-    height: 8px;
-    background: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 200 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.00025 5.5C41.8906 5.5 18.2323 2.5 59.9576 2.5C101.683 2.5 74.3976 6.5 120.424 5.5C166.45 4.5 158.647 2.5 198 2.5' stroke='%230022aa' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-size: cover;
-    opacity: 0.7;
-}
-
-h3 {
-    margin: 0 0 10px 0;
-    font-size: 1.2rem;
-}
-
-/* --- FUENTE MONOSPACE & ASCII --- */
-pre, code, .tech-font {
-    font-family: 'Fira Code', monospace;
-    font-size: 0.9em;
-}
-
-/* GRID LAYOUT RESPONSIVE */
-.grid-2 {
-    display: grid;
-    /* Si hay espacio, 2 columnas. Si no, 1 columna (min 280px) */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-}
-
-/* Stickers (Skills) */
-.sticker-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.sticker {
-    padding: 5px 12px;
-    border: 2px solid var(--ink-color);
-    border-radius: 12px 20px 15px 25px; 
-    font-family: 'Fira Code', monospace;
-    font-size: 0.85em;
-    cursor: pointer;
-    transition: transform 0.2s;
-    background: #fff;
-    display: inline-block;
-}
-.sticker:hover {
-    background: var(--ink-color);
-    color: #fff;
-    transform: rotate(-2deg) scale(1.1);
-}
-
-/* Botón de contacto */
-.btn-ink {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 12px 30px;
-    background: transparent;
-    border: 2px solid var(--ink-color);
-    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-    color: var(--ink-color);
+a {
+    color: var(--term-ink);
     text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1rem;
-    transition: 0.2s;
-    cursor: pointer;
-}
-.btn-ink:hover {
-    background: var(--ink-color);
-    color: #fff;
-    box-shadow: 0 5px 15px rgba(0, 34, 170, 0.3);
 }
 
-/* Ajustes específicos para móviles */
-@media (max-width: 480px) {
-    body { padding: 10px; }
-    .hand-drawn-box { margin-bottom: 20px; padding: 15px; }
-    h1 { font-size: 2.5rem; }
+/* Utilities */
+.ascii-box {
+    white-space: pre-wrap;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+/* CRT Scanline effect */
+.crt::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.1) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 9998;
+    pointer-events: none;
+}
+
+.crt::after {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.05); /* Vignette base */
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
+    z-index: 9999;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.95; }
+    50% { opacity: 0.92; }
+    100% { opacity: 0.96; }
+}
+
+/* Glitch Effect - Toned Down */
+.glitch-hover:hover {
+    animation: glitch 0.2s cubic-bezier(.25, .46, .45, .94) both infinite;
+    color: var(--term-glitch);
+}
+
+@keyframes glitch {
+    0% { transform: translate(0) }
+    20% { transform: translate(-1px, 0) }
+    40% { transform: translate(1px, 0) }
+    60% { transform: translate(-0.5px, 0) }
+    80% { transform: translate(0.5px, 0) }
+    100% { transform: translate(0) }
 }
