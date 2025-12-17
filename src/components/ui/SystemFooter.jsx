@@ -36,10 +36,10 @@ const SystemFooter = () => {
             </AsciiButton>
 
             <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
-                <AsciiButton href="https://github.com/" className="glitch-hover">[ GITHUB ]</AsciiButton>
-                <AsciiButton href="https://linkedin.com/" className="glitch-hover">[ LINKEDIN ]</AsciiButton>
-                <AsciiButton href="https://instagram.com/" className="glitch-hover">[ INSTAGRAM ]</AsciiButton>
-                <AsciiButton href="https://whatsapp.com/" className="glitch-hover">[ WHATSAPP ]</AsciiButton>
+                <AsciiButton href="https://github.com/Albonire" className="glitch-hover">[ GITHUB ]</AsciiButton>
+                <AsciiButton href="https://linkedin.com/in/tu-usuario" className="glitch-hover">[ LINKEDIN ]</AsciiButton>
+                <AsciiButton href="https://instagram.com/tu-usuario" className="glitch-hover">[ INSTAGRAM ]</AsciiButton>
+                <AsciiButton href="https://wa.me/1234567890" className="glitch-hover">[ WHATSAPP ]</AsciiButton>
             </div>
 
             <br /><br />

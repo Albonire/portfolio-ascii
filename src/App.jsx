@@ -58,10 +58,10 @@ function App() {
 
         <div style={{ marginTop: '10px', borderTop: '1px dashed var(--term-ink)', borderBottom: '1px dashed var(--term-ink)', padding: '10px 0' }}>
             <p style={{ margin: 0, textTransform: 'uppercase', letterSpacing: '2px' }}>
-                &lt; SYSTEM.USER: FABIAN GONZÁLEZ /&gt;
+                &lt; SYSTEM.USER: FABIAN GONZALEZ /&gt;
             </p>
             <p style={{ margin: 0, fontSize: '0.9em', opacity: 0.8 }}>
-                [ STATUS: ONLINE ] [ ROLE: SOFTWARE_ENGINEER / FULLSTACK DEV ]
+                [ STATUS: ONLINE ] [ ROLE: FULL STACK DEVELOPER ]
             </p>
         </div>
       </header>
@@ -73,15 +73,17 @@ function App() {
           <AsciiPanel title="01_PROFILE.exe">
               <p style={{ textAlign: 'justify' }}>
                   &gt; INIT_SEQUENCE... <br/>
-                  &gt; LOAD_DATA: PASSION <br/><br/>
-                  Full Stack Developer navigating the chaos of the web via <strong>Fedora Linux</strong>.
+                  &gt; LOAD_DATA: MISSION <br/><br/>
+                  Transforming ideas into digital reality through clean code and immersive design.
+                  <br/><br/>
+                  Full Stack Developer enthusiastic about UI/UX and building high-performance web applications.
               </p>
               
               <div style={{ margin: '20px 0', border: '1px solid var(--term-ink)', padding: '10px', backgroundColor: 'var(--term-dim)' }}>
                   <pre style={{ fontSize: '10px', lineHeight: '10px', margin: 0 }}>
 {`    .--.       
    |o_o |    [ SYSTEM: LINUX ]
-   |:_/ |    [ KERNEL: UP ]
+   |:_/ |    [ DISTRO: FEDORA ]
   //   \\ \\   
  (|     | )  
 /'\\_   _/
@@ -97,8 +99,10 @@ function App() {
               
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
                   {[
-                      '[ PYTHON ]', '[ REACT ]', '[ DJANGO ]', 
-                      '[ LINUX ]', '[ AZURE ]', '[ GIT ]', '[ PSQL ]'
+                      '[ HTML/CSS ]', '[ JS/TS ]', '[ REACT ]', '[ NEXT.JS ]',
+                      '[ TAILWIND ]', '[ THREE.JS ]',
+                      '[ PYTHON ]', '[ DJANGO ]', '[ FASTAPI ]', '[ NODE.JS ]',
+                      '[ POSTGRES ]', '[ SQLITE ]', '[ GIT ]', '[ DOCKER ]'
                   ].map((tech) => (
                       <span key={tech} 
                       className="glitch-hover"
@@ -118,8 +122,8 @@ function App() {
               <div style={{ marginTop: '30px' }}>
                   <p style={{ borderBottom: '1px solid var(--term-ink)', display: 'inline-block' }}>&gt; PENDING_UPDATES:</p>
                   <ul style={{ listStyle: 'none', paddingLeft: '0' }}>
-                      <li>[*] Machine Learning</li>
-                      <li>[*] Advanced WebSockets</li>
+                      <li>[*] Advanced AI Integration</li>
+                      <li>[*] WebGL Shaders</li>
                   </ul>
               </div>
           </AsciiPanel>
@@ -130,15 +134,18 @@ function App() {
           <AsciiPanel title="03_EDUCATION.log">
               <pre style={{ fontSize: '12px', lineHeight: '1.5', whiteSpace: 'pre-wrap' }}>
 {`./EDUCATION/
-├── 2024: Software Engineering
-│   ├── University [Name]
-│   └── Status: [In Progress / Graduated]
+├── 2020-PRESENT: Systems Engineering
+│   ├── Universidad de Cartagena
+│   └── Notes: Software Dev, Algorithms
 │
-└── 20XX: [Previous Title / High School]
-    └── [Institution]`}
+├── 2023: English B2
+│   └── Centro Colombo Americano
+│
+└── 2019: Academic High School
+    └── I.E. Jose de la Vega`}
               </pre>
               <p style={{ marginTop: '10px', fontStyle: 'italic', opacity: 0.8 }}>
-                  &gt; "Learning is a continuous process."
+                  &gt; "Continuous learning is the key."
               </p>
           </AsciiPanel>
       </div>
@@ -151,22 +158,65 @@ function App() {
                 
                 {/* Project 1 */}
                 <div style={{ border: '1px dotted var(--term-ink)', padding: '15px' }} className="glitch-hover">
-                    <h3 style={{ borderBottom: '2px solid var(--term-ink)', display: 'inline-block' }}>cupidoUP_App</h3>
+                    <h3 style={{ borderBottom: '2px solid var(--term-ink)', display: 'inline-block' }}>Task Manager</h3>
                     <div style={{ margin: '10px 0', fontSize: '11px', fontWeight: 'bold' }}>
-                        [APP] &lt;=======&gt; [DATABASE]
+                        [WEB] &lt;=======&gt; [POMODORO]
                     </div>
-                    <p>University social network for secure student connections.</p>
-                    <p style={{ fontSize: '0.8em', textTransform: 'uppercase' }}>Stack: Django | React</p>
+                    <p>Task management platform with Pomodoro integration and auth.</p>
+                    <p style={{ fontSize: '0.8em', textTransform: 'uppercase', marginTop: '5px' }}>
+                        Stack: Django | JS | SQLite3
+                    </p>
+                    <div style={{ marginTop: '10px', fontSize: '10px' }}>
+                        <a href="https://github.com/Albonire/To-DoList1.0" target="_blank" style={{ marginRight: '10px' }}>[ SOURCE ]</a>
+                    </div>
                 </div>
 
                 {/* Project 2 */}
                 <div style={{ border: '1px dotted var(--term-ink)', padding: '15px' }} className="glitch-hover">
-                    <h3 style={{ borderBottom: '2px solid var(--term-ink)', display: 'inline-block' }}>Azure_Sockets</h3>
+                    <h3 style={{ borderBottom: '2px solid var(--term-ink)', display: 'inline-block' }}>BDI-GB-ZOO</h3>
                     <div style={{ margin: '10px 0', fontSize: '11px', fontWeight: 'bold' }}>
-                        (CLOUD) &lt;~~&gt; (CLIENT)
+                        [ API ] &lt;~~&gt; [ ZOO MGMT ]
                     </div>
-                    <p>Real-time chat infrastructure deployed on Azure.</p>
-                    <p style={{ fontSize: '0.8em', textTransform: 'uppercase' }}>Stack: Python | Redis</p>
+                    <p>Zoo management system for animals, habitats, and caretakers.</p>
+                    <p style={{ fontSize: '0.8em', textTransform: 'uppercase', marginTop: '5px' }}>
+                        Stack: FastAPI | Postgres | Docker
+                    </p>
+                    <div style={{ marginTop: '10px', fontSize: '10px' }}>
+                         <a href="https://github.com/Albonire/BDI-GB-ZOO" target="_blank" style={{ marginRight: '10px' }}>[ SOURCE ]</a>
+                         <a href="https://bdi-gb-zoo.vercel.app/" target="_blank">[ DEMO ]</a>
+                    </div>
+                </div>
+
+                 {/* Project 3 */}
+                 <div style={{ border: '1px dotted var(--term-ink)', padding: '15px' }} className="glitch-hover">
+                    <h3 style={{ borderBottom: '2px solid var(--term-ink)', display: 'inline-block' }}>IA Humanizer</h3>
+                    <div style={{ margin: '10px 0', fontSize: '11px', fontWeight: 'bold' }}>
+                        [ AI ] &lt;---&gt; [ TEXT ]
+                    </div>
+                    <p>AI text humanizer and rewriting orchestrator.</p>
+                    <p style={{ fontSize: '0.8em', textTransform: 'uppercase', marginTop: '5px' }}>
+                        Stack: React | TS | OpenAI
+                    </p>
+                    <div style={{ marginTop: '10px', fontSize: '10px' }}>
+                        <a href="https://github.com/Albonire/ia-humanizer" target="_blank" style={{ marginRight: '10px' }}>[ SOURCE ]</a>
+                        <a href="https://ia-humanizer-neon.vercel.app/" target="_blank">[ DEMO ]</a>
+                    </div>
+                </div>
+
+                {/* Project 4 */}
+                <div style={{ border: '1px dotted var(--term-ink)', padding: '15px' }} className="glitch-hover">
+                    <h3 style={{ borderBottom: '2px solid var(--term-ink)', display: 'inline-block' }}>Cupido App</h3>
+                    <div style={{ margin: '10px 0', fontSize: '11px', fontWeight: 'bold' }}>
+                        [ SOCIAL ] &lt;===&gt; [ DATING ]
+                    </div>
+                    <p>Full-stack dating application for university students.</p>
+                    <p style={{ fontSize: '0.8em', textTransform: 'uppercase', marginTop: '5px' }}>
+                        Stack: React | Django | DRF
+                    </p>
+                    <div style={{ marginTop: '10px', fontSize: '10px' }}>
+                        <a href="https://github.com/cupidoUP-App" target="_blank" style={{ marginRight: '10px' }}>[ SOURCE ]</a>
+                        <a href="https://cupido-sandy.vercel.app/" target="_blank">[ DEMO ]</a>
+                    </div>
                 </div>
 
             </div>
