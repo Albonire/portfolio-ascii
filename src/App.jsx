@@ -38,16 +38,23 @@ function App() {
         className="crt" 
         onMouseMove={handleMouseMove}
         style={{ 
-            maxWidth: '1024px', 
-            margin: '0 auto', 
             minHeight: '100vh', 
-            display: 'flex', 
-            flexDirection: 'column',
-            position: 'relative' // Needed for relative interference
+            width: '100%',
+            position: 'relative',
+            overflowX: 'hidden' 
         }}
     >
-      <div className="crt-interference" />
+      <div className="crt-interference" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 10 }} />
       <ClickSpark />
+      
+      <div style={{ 
+          maxWidth: '1024px', 
+          margin: '0 auto', 
+          display: 'flex', 
+          flexDirection: 'column',
+          position: 'relative',
+          zIndex: 20
+      }}>
       
       {/* Navbar now includes Theme Switcher logic if we pass it down, 
           OR we treat Navbar as a layout container. 
@@ -288,6 +295,7 @@ function App() {
       {/* FOOTER */}
       <SystemFooter />
 
+      </div>
     </div>
   );
 }
