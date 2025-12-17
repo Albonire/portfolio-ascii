@@ -1,0 +1,25 @@
+.heroContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    overflow: hidden;
+    font-weight: bold;
+    user-select: none;
+    color: var(--ink-color);
+    filter: contrast(120%);
+}
+
+.asciiPre {
+    font-family: 'Fira Code', monospace;
+    margin: 0;
+    font-size: 0.6rem;
+    line-height: 0.6rem;
+}
+
+@media (min-width: 768px) {
+    .asciiPre {
+        font-size: 0.8rem;
+        line-height: 0.8rem;
+    }
+}
