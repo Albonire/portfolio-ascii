@@ -7,6 +7,7 @@ import SystemFooter from './components/ui/SystemFooter';
 import ProjectCard from './components/ui/ProjectCard';
 import ClickSpark from './components/ui/ClickSpark';
 import SectionDivider from './components/ui/SectionDivider';
+import AsciiTrail from './components/ui/AsciiTrail';
 
 function App() {
   const [theme, setTheme] = useState('blueprint');
@@ -44,7 +45,7 @@ function App() {
             overflowX: 'hidden' 
         }}
     >
-      <div className="crt-interference" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 10 }} />
+      <AsciiTrail />
       <ClickSpark />
       
       <div style={{ 
